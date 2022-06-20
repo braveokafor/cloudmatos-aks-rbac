@@ -19,11 +19,16 @@
 - Navigate to the `./enable-rbac` directory. 
 - Edit the `resource-group-name`, and `aks-clusters` (just the cluster names) variables in the `terraform.tfvars`.
 ```hcl
-aks-clusters        = ["k8stest"]
-resource-group-name = "test-aks-rg"
+aks-clusters        = ["<cluster-1-name-goes-here>","<cluster-2-name-goes-here>"]
+resource-group-name = "<resource-group-name-goes-here>"
 ```
 Then perform the following commands on the directory:
 - `terraform init` to get required plugins.
 - `terraform plan` to review the infrastructure plan.
 - `terraform apply` to apply the infrastructure.
+
+#### 🏗 Requirements
+- Azure CLI (2.24.0 or later). 
+- Azure Subscription (set in the CLI). 
+- Azure Account (set in the CLI).
 <br/>
