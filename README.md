@@ -32,3 +32,18 @@ Then perform the following commands on the directory:
 - Azure Subscription (set in the CLI). 
 - Azure Account (set in the CLI).
 <br/>
+
+#### 🏗 Testing
+To provision a sample AKS Cluster for testing:  
+- Navigate to the `./aks` directory. 
+- Edit the `resource-group-name`, and `resource-group-location` variables in the `terraform.tfvars`.
+- Add a valid "Service Principal App ID" `aks_service_principal_app_id`, and "Service Principal Password `aks_service_principal_client_secret` in the `terraform.tfvars`.
+```hcl
+# RESOURCE GROUP
+resource-group-name     = "test-aks-rg"
+resource-group-location = "Central US"
+
+# SERVICE PRINCIPAL
+aks_service_principal_app_id        = "<service_principal_app_id>"
+aks_service_principal_client_secret = "<service_principal_password>"
+```
