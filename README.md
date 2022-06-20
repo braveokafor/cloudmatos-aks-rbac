@@ -1,94 +1,29 @@
 <h1 align="center">
-  Configure Azure VM Backups
+  Enable RBAC on AKS
 </h1>
-<h3 align="center">These scripts setup Azure VM Backups at different resouce scopes.</h3>
+<h3 align="center">Enable "Role Based Access Contro" on Azure Kubernertes Cluster</h3>
 
 ## <p align="center">⚡️ How it Works</p>
 
 <p>
-<h2>At the VM scope:</h2>
+<h2>Eanble RBAC on AKS:</h2>
 
-|                                                             Action                                                                   |               tf file                  |
-|--------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
-| Creates a [Recovery Vault](https://docs.microsoft.com/en-us/azure/backup/backup-azure-recovery-services-vault-overview)              |`./vm-backup-vm-scope/recovery-vault.tf`| 
-| Creates a [Recovery Vault Policy](https://docs.microsoft.com/en-us/azure/backup/backup-azure-arm-vms-prepare#create-a-custom-policy) |`./vm-backup-vm-scope/recovery-vault.tf`| 
-| Imports a list of VM's                                                                                                               |`./vm-backup-vm-scope/terraform.tfvars` |
-| Configures [Backups](https://docs.microsoft.com/en-us/azure/backup/backup-azure-arm-vms-prepare#apply-a-backup-policy) for each VM   |`./vm-backup-vm-scope/backups.tf`       |
+|                                Action                                   |            tf file              |
+|-------------------------------------------------------------------------|---------------------------------|
+| Get's the "Resource Group"                                              |`./enable-rbac/terraform.tfvars` |
+| Get's a list of AKS Clusters (the clusters you want to enable RBAC on)  |`./enable-rbac/terraform.tfvars` |
+| Enables RBAC on the specified AKS clusters                              |`./enable-rbac/main.tf`          |                                                                                                     |`./vm-backup-vm-scope/terraform.tfvars` |
+
 
 #### 🛠 Usage
-- Navigate to the `./vm-backup-vm-scope` directory. 
-- Edit the `resource-group-name`, `resource-group-location` and `vm-names` variables in the `terraform.tfvars`.
+- Navigate to the `./enable-rbac` directory. 
+- Edit the `resource-group-name`, and `aks-clusters` (just the cluster names) variables in the `terraform.tfvars`.
 ```hcl
-# RESOURCE GROUP
-resource-group-name     = "test-security-policies-rg"
-resource-group-location = "East US" #"Germany West Central" # 
-
-# RECOVERY VAULT
-backup-time             = "02:00"
-backup-retention-period = 30
-
-# VM BACKUP
-vm-names                = ["vm"]
+aks-clusters        = ["k8stest"]
+resource-group-name = "test-aks-rg"
 ```
 Then perform the following commands on the directory:
-- `terraform init` to get the plugins.
-- `terraform plan` to see the infrastructure plan.
-- `terraform apply` to apply the infrastructure build.
-
+- `terraform init` to get required plugins.
+- `terraform plan` to review the infrastructure plan.
+- `terraform apply` to apply the infrastructure.
 <br/>
-<h2>At the Resource Group scope:</h2>
-
-|                                                       Action                                                                                                                                                                              |                           tf file                           |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| Creates a [Recovery Vault](https://docs.microsoft.com/en-us/azure/backup/backup-azure-recovery-services-vault-overview).                                                                                                                  | `./vm-backup-policy-resource-group-scope/recovery-vault.tf` |
-| Creates a [Recovery Vault Policy](https://docs.microsoft.com/en-us/azure/backup/backup-azure-arm-vms-prepare#create-a-custom-policy).                                                                                                     | `./vm-backup-policy-resource-group-scope/recovery-vault.tf` |
-| [Defines](https://docs.microsoft.com/en-us/azure/governance/policy/concepts/definition-structure) an [Azure Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview) to scan for VM's without a "Backup Configuration". | `./vm-backup-policy-resource-group-scope/policy-rg.tf`      |
-| [Assigns](https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure) the "VM Backup" Policy to the Resource Group.                                                                                           | `./vm-backup-policy-resource-group-scope/policy-rg.tf`      |
-| [Remediates](https://docs.microsoft.com/en-us/azure/governance/policy/how-to/remediate-resources) non-compliant VM's (i.e: Configures VM Backups).                                                                                        | `./vm-backup-policy-resource-group-scope/policy-rg.tf`      |
-
-#### 🛠 Usage
-- Navigate to the `./vm-backup-policy-resource-group-scope` directory. 
-- Edit the `resource-group-name` and `resource-group-location` variables in the `terraform.tfvars`.
-```hcl
-# RESOURCE GROUP
-resource-group-name     = "test-security-policies-rg"
-resource-group-location = "East US"
-
-# VM BACKUP
-backup-time             = "02:00"
-backup-retention-period = 30
-```
-Then perform the following commands on the directory:
-- `terraform init` to get the plugins.
-- `terraform plan` to see the infrastructure plan.
-- `terraform apply` to apply the infrastructure build.
-
-<br/>
-<h2>At the Subscription scope:</h2>
-
-|                                                       Action                                                                                                                                                                              |                                tf file                         |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| Creates a [Recovery Vault](https://docs.microsoft.com/en-us/azure/backup/backup-azure-recovery-services-vault-overview).                                                                                                                  | `./vm-backup-policy-subscription-scope/recovery-vault.tf`      |
-| Creates a [Recovery Vault Policy](https://docs.microsoft.com/en-us/azure/backup/backup-azure-arm-vms-prepare#create-a-custom-policy).                                                                                                     | `./vm-backup-policy-subscription-scope/recovery-vault.tf`      |
-| [Defines](https://docs.microsoft.com/en-us/azure/governance/policy/concepts/definition-structure) an [Azure Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview) to scan for VM's without a "Backup Configuration". | `./vm-backup-policy-subscription-scope/policy-subscription.tf` |
-| [Assigns](https://docs.microsoft.com/en-us/azure/governance/policy/concepts/assignment-structure) the "VM Backup" Policy to the Subscription.                                                                                             | `./vm-backup-policy-subscription-scope/policy-subscription.tf` |
-| [Remediates](https://docs.microsoft.com/en-us/azure/governance/policy/how-to/remediate-resources) non-compliant VM's (i.e: Configures VM Backups).                                                                                        | `./vm-backup-policy-subscription-scope/policy-subscription.tf` |
-
-#### 🛠 Usage
-- Navigate to the `./vm-backup-policy-subscription-scope` directory. 
-- Edit the `resource-group-name` and `resource-group-location` variables in the `terraform.tfvars`.
-```hcl
-# RESOURCE GROUP
-resource-group-name     = "test-security-policies-rg"
-resource-group-location = "East US"
-
-# VM BACKUP
-backup-time             = "02:00"
-backup-retention-period = 30
-```
-Then perform the following commands on the directory:
-- `terraform init` to get the plugins.
-- `terraform plan` to see the infrastructure plan.
-- `terraform apply` to apply the infrastructure build.
-
-</p>
