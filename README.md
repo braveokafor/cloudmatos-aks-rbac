@@ -1,7 +1,7 @@
 <h1 align="center">
   Enable RBAC on AKS
 </h1>
-<h3 align="center">Enable "Role Based Access Contro" on Azure Kubernertes Cluster</h3>
+<h3 align="center">Enable "Role Based Access Control" on Azure Kubernertes Cluster</h3>
 
 ## <p align="center">⚡️ How it Works</p>
 
@@ -34,7 +34,7 @@ Then perform the following commands on the directory:
 - Azure Account (set in the CLI).
 <br/>
 
-#### 🏗 Testing
+#### 🧪 Testing
 To provision a sample AKS Cluster for testing:  
 - Navigate to the `./aks` directory. 
 - Edit the `resource-group-name`, and `resource-group-location` variables in the `terraform.tfvars`.
