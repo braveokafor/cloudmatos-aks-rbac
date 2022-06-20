@@ -4,11 +4,11 @@ maintainer  = "Brave Okafor <okaforbrave@gmail.com>"
 
 # RESOURCE GROUP
 resource-group-name     = "test-aks-rg"
-resource-group-location = "Central US" #"Germany West Central" # "West Europe"
+resource-group-location = "Central US"
 
 # UNCOMMENT IF YOU INTEND TO USE REMOTE STATE
 /* # STORAGE ACCOUNT
-storage-account-name             = "darkeyetestakssa" #"deepeyesa"
+storage-account-name             = "<storage-account-name-goes-here>"
 storage-account-tier             = "Standard"
 storage-account-replication-type = "LRS"
 
