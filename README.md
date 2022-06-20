@@ -26,6 +26,7 @@ Then perform the following commands on the directory:
 - `terraform init` to get required plugins.
 - `terraform plan` to review the infrastructure plan.
 - `terraform apply` to apply the infrastructure.
+<br/>
 
 #### 🏗 Requirements
 - Azure CLI (2.24.0 or later). 
@@ -47,3 +48,8 @@ resource-group-location = "Central US"
 aks_service_principal_app_id        = "<service_principal_app_id>"
 aks_service_principal_client_secret = "<service_principal_password>"
 ```
+
+Then perform the following commands on the directory:
+- `terraform init` to get required plugins.
+- `terraform plan` to review the infrastructure plan.
+- `terraform apply` to apply the infrastructure.
