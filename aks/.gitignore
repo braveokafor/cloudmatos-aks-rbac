@@ -1,5 +1,4 @@
-aks/.terraform/*
-enable-rbac/.terraform/*
+.terraform/*
 .terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
